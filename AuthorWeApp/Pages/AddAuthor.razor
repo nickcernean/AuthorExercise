@@ -1,0 +1,32 @@
+﻿@page "/addAuthor"
+@using AuthorWeApp.Data
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager _navigationManager;
+@inject IBookController _bookController;
+@inject IAuthorController _authorController;
+
+
+<div class="container-lg ">
+    <h3>Add Author</h3>
+    <EditForm Model="_authorToAdd" OnValidSubmit="@AddAuthorAsync" class="card card-body bg-light  w-50 p-3">
+        <div class="form-group row mt-2">
+            <label for="name" class="col-md-2 col-form-label ">First Name:</label>
+            <div class="col-md-10">
+                <InputText id="name" class="form-control" @bind-Value="_authorToAdd.FirstName"/>
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label for="supplier" class="col-md-2 col-form-label">Last Name:</label>
+            <div class="col-md-10">
+                <InputText id="supplier" class="form-control" @bind-Value="_authorToAdd.LastName"/>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-12 text-right ">
+                <DataAnnotationsValidator/> <Microsoft.AspNetCore.Components.Forms.ValidationSummary/>
+                <button type="submit" class="btn btn-success ">Add Author</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+

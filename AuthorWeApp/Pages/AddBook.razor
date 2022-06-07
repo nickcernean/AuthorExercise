@@ -1,0 +1,64 @@
+﻿@page "/addBook"
+@using AuthorWeApp.Data
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager _navigationManager;
+@inject IBookController _bookController;
+@inject IAuthorController _authorController;
+
+
+<div class="container-lg ">
+    <h3>AddBook</h3>
+    <EditForm Model="bookToAdd" OnValidSubmit="@AddBookAsync" class="card card-body bg-light  w-50 p-3">
+        <div class="form-group row mt-2">
+            <label for="name" class="col-md-2 col-form-label ">ISBN:</label>
+            <div class="col-md-10">
+                <InputNumber id="name" class="form-control" @bind-Value="bookToAdd.ISBN"/>
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label for="supplier" class="col-md-2 col-form-label">Title:</label>
+            <div class="col-md-10">
+                <InputText id="supplier" class="form-control" @bind-Value="bookToAdd.Title"/>
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label for="price" class="col-md-2 col-form-label">PublicationYear:</label>
+            <div class="col-md-10">
+                <InputNumber id="price" class="form-control" @bind-Value="bookToAdd.PublicationYear"/>
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label for="image" class="col-md-2 col-form-label">NumberOfPages:</label>
+            <div class="col-md-10">
+                <InputNumber id="image" class="form-control" @bind-Value="bookToAdd.NumOfPages"/>
+            </div>
+        </div>
+        <div class="form-group row mt-2">
+            <label for="image" class="col-md-2 col-form-label">Genre:</label>
+            <div class="col-md-10">
+                <InputText id="image" class="form-control" @bind-Value="bookToAdd.Genre"/>
+            </div>
+        </div>
+        <div class="form-group row mt-2 ml-20">
+            <label for="image" class="col-md-2 col-form-label ">@authorFirstName @authorLastName</label>
+            <div class="col-md-10">
+                <Dropdown Display="Display.InlineBlock">
+                    <DropdownToggle Color="Color.Primary">Author</DropdownToggle>
+                    <DropdownMenu MaxMenuHeight="200px" MaxMenuWidth="300px">
+                        @foreach (var author in Authors)
+                        {
+                            <DropdownItem Clicked="o => SetAuthor(author.Id)">@author.FirstName @author.LastName </DropdownItem>
+                        }
+                    </DropdownMenu>
+                </Dropdown>
+            </div>
+        </div>
+        
+        <div class="row ">
+            <div class="col-md-12 text-right ">
+                <DataAnnotationsValidator/> <Microsoft.AspNetCore.Components.Forms.ValidationSummary/>
+                <button type="submit" class="btn btn-success ">Add Book</button>
+            </div>
+        </div>
+    </EditForm>
+</div>

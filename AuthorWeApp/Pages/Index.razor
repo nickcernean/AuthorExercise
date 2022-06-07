@@ -1,0 +1,54 @@
+@page "/"
+
+@using AuthorWeApp.Data
+@using Blazorise.Extensions
+@inject NavigationManager _navigationManager;
+@inject IBookController _bookController;
+@inject IAuthorController _authorController;
+
+<PageTitle>Index</PageTitle>
+
+<div class="form-group w-25 p-3">
+    <input class="form-control" type="text" placeholder="Filter..."
+           @bind="Filter"
+           @bind:event="oninput">
+</div>
+<div class="container-lg ">
+    <h1>Books</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Title</th>
+            <th scope="col">PublicationYear</th>
+            <th scope="col">Number of Pages</th>
+            <th scope="col">AuthorFirstName</th>
+            <th scope="col">AuthorLastName</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var author in allAuthors)
+        {
+            if (!author.Books.IsNullOrEmpty())
+            {
+                @foreach (var book in author.Books)
+                {
+                    if (!IsVisible(author, book))
+                        continue;
+                    <tr>
+                        <th scope="row"></th>
+                        <td>@book.Title</td>
+                        <td>@book.PublicationYear</td>
+                        <td>@book.NumOfPages</td>
+                        <td>@author.FirstName</td>
+                        <td>@author.LastName</td>
+                        <td>
+                            <button class="btn-danger" type="button"  @onclick="() => DeleteBook(author.Id, book.ISBN)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+        </tbody>
+    </table>
+</div>
